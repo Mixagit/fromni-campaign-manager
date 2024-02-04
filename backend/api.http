@@ -1,4 +1,4 @@
-### Run the following request to create channels(Vkontakte, Telegram, WhatsApp, SMS)
+### Run the following requests to create channels(Vkontakte, Telegram, WhatsApp, SMS)
 
 POST http://localhost:5000/api/create-channel/ HTTP/1.1
 content-type: application/json
@@ -65,7 +65,7 @@ content-type: application/json
   "keyboard_inline_supported": false
 }
 
-###
+### Test requests
 
 GET http://localhost:5000/api/read-channel-capability/VKontakte/ HTTP/1.1
 
@@ -76,7 +76,7 @@ content-type: application/json
 
 {
   "channel_id": 5,
-  "text": "test text 2SSыыыы",
+  "text": "test",
   "buttons": [
     {
       "type": "quick_reply",

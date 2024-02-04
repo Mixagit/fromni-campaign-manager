@@ -82,8 +82,9 @@ const goToSettings = channel => {
 }
 
 const sendCampaign = async () => {
+	// на сервере метод не реализован, но в него бы передавались sortedSelectedChannels и настройки всех каналов
 	try {
-		await axios.post(`${apiUrl}send-campaign`, {})
+		await axios.post(`${apiUrl}send-campaign`, sortedSelectedChannels)
 	} catch (error) {
 		console.error('Ошибка отправки кампании:', error)
 	}

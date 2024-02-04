@@ -147,6 +147,7 @@ const addButton = (isLink = false) => {
 			})
 		} else {
 			btns.push({
+				id: new Date().getTime(),
 				type: 'link',
 				keyboard_type: `${selectedKeyboard.value}`,
 				text: '',
