@@ -91,6 +91,7 @@ const sendCampaign = async () => {
 }
 
 onMounted(async () => {
+	await loadDefaultChannels()
 	try {
 		const response = await axios.get(`${apiUrl}read-channel-list/`)
 		channels.value = response.data
@@ -98,6 +99,60 @@ onMounted(async () => {
 		console.error('Ошибка загрузки списка каналов с сервера:', error)
 	}
 })
+
+const loadDefaultChannels = async () => {
+	const vkontakte = {
+		channel_name: 'VKontakte',
+		message_max_characters: 4096,
+		keyboard_standart_supported: true,
+		keyboard_standart_max_buttons: 40,
+		keyboard_standart_max_button_characters: -1,
+		keyboard_standart_link_buttons_supported: true,
+		keyboard_inline_supported: true,
+		keyboard_inline_max_buttons: 10,
+		keyboard_inline_max_button_characters: -1,
+		keyboard_inline_link_buttons_supported: false,
+	}
+	const whatsapp = {
+		channel_name: 'WhatsApp',
+		message_max_characters: 1000,
+		keyboard_standart_supported: true,
+		keyboard_standart_max_buttons: 10,
+		keyboard_standart_max_button_characters: 20,
+		keyboard_standart_link_buttons_supported: false,
+		keyboard_inline_supported: true,
+		keyboard_inline_max_buttons: 3,
+		keyboard_inline_max_button_characters: 20,
+		keyboard_inline_link_buttons_supported: true,
+		linkButtonsLimit: 1,
+	}
+	const telegram = {
+		channel_name: 'Telegram',
+		message_max_characters: 4096,
+		keyboard_standart_supported: true,
+		keyboard_standart_max_buttons: -1,
+		keyboard_standart_max_button_characters: -1,
+		keyboard_standart_link_buttons_supported: false,
+		keyboard_inline_supported: true,
+		keyboard_inline_max_buttons: -1,
+		keyboard_inline_max_button_characters: 64,
+		keyboard_inline_link_buttons_supported: true,
+	}
+	const sms = {
+		channel_name: 'SMS',
+		message_max_characters: -1,
+		keyboard_standart_supported: false,
+		keyboard_inline_supported: false,
+	}
+	try {
+		await axios.post(`${apiUrl}create-channel`, vkontakte)
+		await axios.post(`${apiUrl}create-channel`, whatsapp)
+		await axios.post(`${apiUrl}create-channel`, telegram)
+		await axios.post(`${apiUrl}create-channel`, sms)
+	} catch (error) {
+		console.error('Ошибка добавления стандартных каналов', error)
+	}
+}
 </script>
 
 <style scoped>
