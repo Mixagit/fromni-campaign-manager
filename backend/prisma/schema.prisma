@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ChannelSettings {
+  id                                       Int             @id @default(autoincrement())
+  channel_name                             String          @unique
+  message_max_characters                   Int?
+  keyboard_standart_supported              Boolean?
+  keyboard_standart_max_buttons            Int?
+  keyboard_standart_max_button_characters  Int?
+  keyboard_standart_link_buttons_supported Boolean?
+  keyboard_inline_supported                Boolean?
+  keyboard_inline_max_buttons              Int?
+  keyboard_inline_max_button_characters    Int?
+  keyboard_inline_link_buttons_supported   Boolean?
+  linkButtonsLimit                         Int?
+  ChannelValues                            ChannelValues[]
+
+  @@map("channel_settings")
+}
+
+model ChannelValues {
+  id         Int             @id @default(autoincrement())
+  text       String?         @default("")
+  channel_id Int
+  channel    ChannelSettings @relation(fields: [channel_id], references: [id])
+
+  buttons KeyboardButtons[]
+
+  @@map("channel_values")
+}
+
+model KeyboardButtons {
+  id            Int     @id @default(autoincrement())
+  type          String  @default("quick_reply")
+  keyboard_type String  @default("standart")
+  text          String? @default("")
+  url           String? @default("")
+
+  channelValuesId Int
+  channel_values  ChannelValues @relation(fields: [channelValuesId], references: [id])
+
+  @@map("keyboard_buttons")
+}

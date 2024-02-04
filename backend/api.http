@@ -1,0 +1,103 @@
+### Run the following request to create channels(Vkontakte, Telegram, WhatsApp, SMS)
+
+POST http://localhost:5000/api/create-channel/ HTTP/1.1
+content-type: application/json
+
+{
+  "channel_name": "VKontakte",
+  "message_max_characters": 4096,
+  "keyboard_standart_supported": true,
+  "keyboard_standart_max_buttons": 40,
+  "keyboard_standart_max_button_characters": -1,
+  "keyboard_standart_link_buttons_supported": true,
+  "keyboard_inline_supported": true,
+  "keyboard_inline_max_buttons": 10,
+	"keyboard_inline_max_button_characters": -1,
+	"keyboard_inline_link_buttons_supported": false
+}
+
+###
+
+POST http://localhost:5000/api/create-channel/ HTTP/1.1
+content-type: application/json
+
+{
+  "channel_name": "WhatsApp",
+  "message_max_characters": 1000,
+  "keyboard_standart_supported": true,
+  "keyboard_standart_max_buttons": 10,
+  "keyboard_standart_max_button_characters": 20,
+  "keyboard_standart_link_buttons_supported": false,
+  "keyboard_inline_supported": true,
+  "keyboard_inline_max_buttons": 3,
+	"keyboard_inline_max_button_characters": 20,
+	"keyboard_inline_link_buttons_supported": true,
+  "linkButtonsLimit": 1
+}
+
+###
+
+POST http://localhost:5000/api/create-channel/ HTTP/1.1
+content-type: application/json
+
+{
+  "channel_name": "Telegram",
+  "message_max_characters": 4096,
+  "keyboard_standart_supported": true,
+  "keyboard_standart_max_buttons": -1,
+  "keyboard_standart_max_button_characters": -1,
+  "keyboard_standart_link_buttons_supported": false,
+  "keyboard_inline_supported": true,
+  "keyboard_inline_max_buttons": -1,
+	"keyboard_inline_max_button_characters": 64,
+	"keyboard_inline_link_buttons_supported": true
+}
+
+###
+
+POST http://localhost:5000/api/create-channel/ HTTP/1.1
+content-type: application/json
+
+{
+  "channel_name": "SMS",
+  "message_max_characters": -1,
+  "keyboard_standart_supported": false,
+  "keyboard_inline_supported": false
+}
+
+###
+
+GET http://localhost:5000/api/read-channel-capability/VKontakte/ HTTP/1.1
+
+###
+
+POST http://localhost:5000/api/update-channel-settings-values/ HTTP/1.1
+content-type: application/json
+
+{
+  "channel_id": 5,
+  "text": "test text 2SSыыыы",
+  "buttons": [
+    {
+      "type": "quick_reply",
+      "keyboard_type": "standart",
+      "text": "Быстрый ответ 1"
+    },
+    {
+      "type": "quick_reply",
+      "keyboard_type": "inline",
+      "text": "Быстрый ответ 1"
+    },
+    {
+      "type": "link",
+      "keyboard_type": "inline",
+      "text": "This is link",
+      "url": "i am link"
+    }
+  ]
+}
+
+
+###
+
+GET http://localhost:5000/api/read-channel-settings-values/WhatsApp/ HTTP/1.1
